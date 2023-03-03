@@ -3,7 +3,7 @@ import pynecone as pc
 import replicate
 
 from ailment import styles
-from ailment.components import card
+from ailment.components import card, container, navbar
 from ailment.state import State
 
 
@@ -85,7 +85,7 @@ def images_card():
                     color="#676767",
                     margin_bottom="1em",
                 ),
-                pc.input(
+                pc.text_area(
                     size="lg",
                     on_blur=ImageGenState.set_prompt
                 ),
@@ -115,4 +115,15 @@ def images_card():
         height="100%",
         margin_bottom="1em",
         background="white",
+    )
+
+def images():
+    return pc.box(
+        navbar(),
+        pc.flex(
+            container(images_card(), margin_top="72px"),
+        ),
+        width="100%",
+        height="100vh",
+        background=styles.background
     )

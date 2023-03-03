@@ -35,8 +35,8 @@ def navbar() -> pc.Component:
                 pc.menu_list(
                     pc.link(pc.menu_item("Home"), href="/"),
                     pc.menu_divider(),
-                    pc.link(pc.menu_item("DALL-E"), href="/dalle"),
-                    pc.link(pc.menu_item("ChatGPT"), href="/gpt"),
+                    pc.link(pc.menu_item("Images"), href="/images"),
+                    pc.link(pc.menu_item("Text"), href="/text"),
                 ),
             ),
             justify="space-between",

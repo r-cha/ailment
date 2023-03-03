@@ -2,7 +2,7 @@ import openai
 import pynecone as pc
 
 from ailment import styles
-from ailment.components import card
+from ailment.components import card, container, navbar
 from ailment.state import State
 
 model_options = [
@@ -100,4 +100,16 @@ def text_card():
         height="100%",
         margin_bottom="1em",
         background="white",
+    )
+
+
+def text():
+    return pc.box(
+        navbar(),
+        pc.flex(
+            container(text_card(), margin_top="72px"),
+        ),
+        width="100%",
+        height="100vh",
+        background=styles.background
     )
