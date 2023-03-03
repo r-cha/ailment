@@ -9,10 +9,10 @@ Requires API creds in environment variables.
 Available now:
 - DALL-E
 - ChatGPT
+- Midjourney
+- Stable Diffusion
 
 Coming soon:
 - Whisper
-- Midjourney
-- Stable Diffusion
-- Something that generates a prompt for an image
 - Moises
+- Something that generates a prompt for an image
