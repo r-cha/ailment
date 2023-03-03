@@ -1,5 +1,6 @@
 .web
 .env
+.ruff-cache
 **/__pycache__/
 
 pynecone.db
