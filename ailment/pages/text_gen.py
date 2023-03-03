@@ -5,7 +5,13 @@ from ailment import styles
 from ailment.components import card
 from ailment.state import State
 
-model_options = ["gpt-3.5-turbo", "gpt-3.5-turbo-0301"]  # [model["id"] for model in openai.Model.list()["data"]]
+model_options = [
+    model["id"]
+    for model
+    in openai.Model.list()["data"]
+    if model["id"].startswith("text-")
+    or "gpt" in model["id"]
+]
 
 
 class TextState(State):
@@ -14,21 +20,40 @@ class TextState(State):
     reply = ""
     model: str = "gpt-3.5-turbo"
 
+    _chat_options = ["gpt-3.5-turbo", "gpt-3.5-turbo-0301"]
+
+    @staticmethod
+    def _do_chat(model: str, prompt: str) -> str:
+        response = openai.ChatCompletion.create(
+            model=model,
+            messages=[
+                {"role": "system", "content": (
+                    "You are a helpful, faithful assistant, "
+                    "willing to show code examples and exercise creativity "
+                    "when prompted."
+                )},
+                {"role": "user", "content": prompt},
+            ],
+        )
+        return response.choices[0].message.content
+
+    @staticmethod
+    def _do_completion(model: str, prompt: str) -> str:
+        response = openai.Completion.create(
+            model=model,
+            prompt=prompt,
+        )
+        return response.choices[0].text
+
     def get_response(self):
         """Get the image from the prompt."""
         try:
-            response = openai.ChatCompletion.create(
-                model=self.model,
-                messages=[
-                    {"role": "system", "content": (
-                        "You are a helpful, faithful assistant, "
-                        " willing to show code examples and exercise creativity "
-                        "when prompted."
-                    )},
-                    {"role": "user", "content": self.prompt},
-                ],
+            model = (
+                self._do_chat
+                if self.model in self._chat_options else
+                self._do_completion
             )
-            self.reply = response.choices[0].message.content
+            self.reply = model(self.model, self.prompt)
         except Exception as e:
             return pc.window_alert(f"Error with execution: {e}")
 
