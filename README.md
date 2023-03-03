@@ -1,5 +1,7 @@
 # ailment
 
+> pronounced "ay - eye - lament"
+
 An ai dashboard for aaalllll the API's.
 
 Requires API creds in environment variables.

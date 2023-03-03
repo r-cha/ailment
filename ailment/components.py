@@ -1,5 +1,27 @@
 import pynecone as pc
 
+from ailment import styles
+
+def container(*children, **kwargs):
+    kwargs = {"max_width": "1440px", "padding_x": ["1em", "2em", "3em"], **kwargs}
+    return pc.container(
+        *children,
+        **kwargs,
+    )
+
+def card(*args, **kwargs):
+    kwargs.update(
+        {
+            "padding": ["1em", "2em"],
+            "border": "1px solid #E3E3E3",
+            "border_radius": "1em",
+            "box_shadow": styles.DOC_SHADOW_LIGHT,
+            "align_items": "left",
+            "_hover": {"box_shadow": styles.DOC_SHADOW},
+        }
+    )
+    return pc.vstack(*args, **kwargs)
+
 def navbar() -> pc.Component:
     return pc.box(
         pc.hstack(
@@ -28,9 +50,3 @@ def navbar() -> pc.Component:
         top="0px",
         z_index="500",
     )
-
-background = (
-    "radial-gradient(circle at 22% 11%,rgba(62, 180, 137,.20),hsla(0,0%,100%,0) 19%),"
-    "radial-gradient(circle at 82% 25%,rgba(33,150,243,.18),hsla(0,0%,100%,0) 35%),"
-    "radial-gradient(circle at 25% 61%,rgba(250, 128, 114, .28),hsla(0,0%,100%,0) 55%)"
-)

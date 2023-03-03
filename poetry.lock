@@ -736,6 +736,18 @@ embeddings = ["matplotlib", "numpy", "openpyxl (>=3.0.7)", "pandas (>=1.2.3)", "
 wandb = ["numpy", "openpyxl (>=3.0.7)", "pandas (>=1.2.3)", "pandas-stubs (>=1.1.0.11)", "wandb"]
 
 [[package]]
+name = "packaging"
+version = "23.0"
+description = "Core utilities for Python packages"
+category = "main"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "packaging-23.0-py3-none-any.whl", hash = "sha256:714ac14496c3e68c99c29b00845f7a2b85f3bb6f1078fd9f72fd20f0570002b2"},
+    {file = "packaging-23.0.tar.gz", hash = "sha256:b6ad297f8907de0fa2fe1ccbd26fdaf387f5f47c7275fedf8cce89f99446cf97"},
+]
+
+[[package]]
 name = "plotly"
 version = "5.13.1"
 description = "An open-source, interactive data visualization library for Python"
@@ -927,6 +939,22 @@ async-timeout = ">=4.0.2"
 [package.extras]
 hiredis = ["hiredis (>=1.0.0)"]
 ocsp = ["cryptography (>=36.0.1)", "pyopenssl (==20.0.1)", "requests (>=2.26.0)"]
+
+[[package]]
+name = "replicate"
+version = "0.5.0"
+description = "Python client for Replicate"
+category = "main"
+optional = false
+python-versions = ">=3.6"
+files = [
+    {file = "replicate-0.5.0.tar.gz", hash = "sha256:d5f05c703fda6798186c11b2854bc60a5517e5a458d7441882100cf734bfc2c2"},
+]
+
+[package.dependencies]
+packaging = "*"
+pydantic = "*"
+requests = "*"
 
 [[package]]
 name = "requests"
@@ -1443,4 +1471,4 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "9d55b07a21e0fc548e08baa95e1d938b64f8a004614d40042a3f854d47f4a805"
+content-hash = "6d65f52b58e559e0751a07b0eee85347cbbd3f8e4e52d362cc4c5f42732816b3"
