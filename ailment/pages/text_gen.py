@@ -2,20 +2,17 @@ import openai
 import pynecone as pc
 
 from ailment import styles
-from ailment.components import card, container, navbar
+from ailment.components import card, page
 from ailment.state import State
 
 model_options = [
     model["id"]
-    for model
-    in openai.Model.list()["data"]
-    if model["id"].startswith("text-")
-    or "gpt" in model["id"]
+    for model in openai.Model.list()["data"]
+    if model["id"].startswith("text-") or "gpt" in model["id"]
 ]
 
 
 class TextState(State):
-
     prompt = ""
     reply = ""
     model: str = "gpt-3.5-turbo"
@@ -27,11 +24,14 @@ class TextState(State):
         response = openai.ChatCompletion.create(
             model=model,
             messages=[
-                {"role": "system", "content": (
-                    "You are a helpful, faithful assistant, "
-                    "willing to show code examples and exercise creativity "
-                    "when prompted."
-                )},
+                {
+                    "role": "system",
+                    "content": (
+                        "You are a helpful, faithful assistant, "
+                        "willing to show code examples and exercise creativity "
+                        "when prompted."
+                    ),
+                },
                 {"role": "user", "content": prompt},
             ],
         )
@@ -50,8 +50,8 @@ class TextState(State):
         try:
             model = (
                 self._do_chat
-                if self.model in self._chat_options else
-                self._do_completion
+                if self.model in self._chat_options
+                else self._do_completion
             )
             self.reply = model(self.model, self.prompt)
         except Exception as e:
@@ -77,10 +77,7 @@ def text_card():
                     color="#676767",
                     margin_bottom="1em",
                 ),
-                pc.input(
-                    size="lg",
-                    on_blur=TextState.set_prompt
-                ),
+                pc.input(size="lg", on_blur=TextState.set_prompt),
                 pc.button(
                     "Generate Text",
                     on_click=TextState.get_response,
@@ -103,13 +100,5 @@ def text_card():
     )
 
 
-def text():
-    return pc.box(
-        navbar(),
-        pc.flex(
-            container(text_card(), margin_top="72px"),
-        ),
-        width="100%",
-        height="100vh",
-        background=styles.background
-    )
+def text_page():
+    return page(text_card())

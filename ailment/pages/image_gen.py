@@ -3,7 +3,7 @@ import pynecone as pc
 import replicate
 
 from ailment import styles
-from ailment.components import card, container, navbar
+from ailment.components import card, page
 from ailment.state import State
 
 
@@ -21,7 +21,7 @@ class ImageGenState(State):
 
     @staticmethod
     def _do_dalle(prompt: str) -> str:
-        response = openai.Image.create(prompt=prompt, n=1, size="512x512")
+        response = openai.Image.create(prompt=prompt, n=1, size="1024x1024")
         return response["data"][0]["url"]
 
     @staticmethod
@@ -30,7 +30,7 @@ class ImageGenState(State):
         version = model.versions.get(
             "27b93a2413e7f36cd83da926f3656280b2931564ff050bf9575f1fdf9bcd7478"
         )
-        return version.predict(prompt=prompt, width=512, height=512)
+        return version.predict(prompt=prompt, width=768, height=768)
 
     @staticmethod
     def _do_midjourney(prompt: str) -> str:
@@ -38,13 +38,12 @@ class ImageGenState(State):
         version = model.versions.get(
             "436b051ebd8f68d23e83d22de5e198e0995357afef113768c20f0b6fcef23c8b"
         )
-        return version.predict(prompt=prompt, width=512, height=512)
-
+        return version.predict(prompt=prompt, width=768, height=768)
 
     _model_map = {
         "Dall-E": _do_dalle,
         "Stable Diffusion": _do_stability,
-        "Midjourney": _do_midjourney
+        "Midjourney": _do_midjourney,
     }
 
     def process_image(self):
@@ -85,10 +84,7 @@ def images_card():
                     color="#676767",
                     margin_bottom="1em",
                 ),
-                pc.text_area(
-                    size="lg",
-                    on_blur=ImageGenState.set_prompt
-                ),
+                pc.text_area(size="lg", on_blur=ImageGenState.set_prompt),
                 pc.button(
                     "Generate Image",
                     on_click=[ImageGenState.process_image, ImageGenState.get_image],
@@ -117,13 +113,6 @@ def images_card():
         background="white",
     )
 
-def images():
-    return pc.box(
-        navbar(),
-        pc.flex(
-            container(images_card(), margin_top="72px"),
-        ),
-        width="100%",
-        height="100vh",
-        background=styles.background
-    )
+
+def images_page():
+    return page(images_card())

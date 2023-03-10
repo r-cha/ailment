@@ -2,12 +2,14 @@ import pynecone as pc
 
 from ailment import styles
 
+
 def container(*children, **kwargs):
     kwargs = {"max_width": "1440px", "padding_x": ["1em", "2em", "3em"], **kwargs}
     return pc.container(
         *children,
         **kwargs,
     )
+
 
 def card(*args, **kwargs):
     kwargs.update(
@@ -21,6 +23,20 @@ def card(*args, **kwargs):
         }
     )
     return pc.vstack(*args, **kwargs)
+
+
+def page(mod):
+    return pc.box(
+        navbar(),
+        pc.flex(
+            container(mod, margin_top="120px"),
+        ),
+        width="100%",
+        height="100vh",
+        margin_y="100px",
+        background=styles.background,
+    )
+
 
 def navbar() -> pc.Component:
     return pc.box(
@@ -37,6 +53,7 @@ def navbar() -> pc.Component:
                     pc.menu_divider(),
                     pc.link(pc.menu_item("Images"), href="/images"),
                     pc.link(pc.menu_item("Text"), href="/text"),
+                    pc.link(pc.menu_item("Audio"), href="/audio"),
                 ),
             ),
             justify="space-between",
